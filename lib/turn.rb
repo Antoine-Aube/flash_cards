@@ -11,6 +11,6 @@ class Turn
   end
 
   def feedback
-    self.correct? ? "Correct!" : "Incorrect"
+    self.correct? ? "Correct!" : "Incorrect."
   end
 end

@@ -3,7 +3,8 @@ require './lib/card'
 
 RSpec.describe Turn do
   let(:card)  { Card.new("What is the capital of Alaska?", "Juneau", :Geography) }
-  let(:turn)  { Turn.new("Juneau", card) }
+  let(:turn)  { Turn.new("wronganswer", card) }
+  let(:turn_2)  { Turn.new("Juneau", card) }
   describe "initialize" do 
     it "exists" do 
 
@@ -18,11 +19,13 @@ RSpec.describe Turn do
 
   describe "instance methods" do
     it "#correct?" do 
-      expect(turn.correct?).to eq(true)
+      expect(turn_2.correct?).to eq(true)
+      expect(turn.correct?).to eq(false)
     end
 
     it "feedback" do 
-      expect(turn.feedback).to eq("Correct!")
+      expect(turn_2.feedback).to eq("Correct!")
+      expect(turn.feedback).to eq("Incorrect.")
     end
   end
 end
