@@ -32,8 +32,59 @@ RSpec.describe Deck do
       # require 'pry';binding.pry
       expect(new_turn).to be_a(Turn)
       expect(new_turn.correct?).to eq(true)
+      expect(@round.turns.length).to eq(1)
+      expect(@round.turns).to eq([new_turn])
     end
 
-    it "expect"
+    it "has an instance variable of number correct" do
+      expect(@round.number_correct).to eq(0)
+      new_turn = @round.take_turn("Juneau")
+      expect(@round.number_correct).to eq(1)
+    end
+
+    it "goes to next card in the deck when a turn is taken" do 
+      expect(@round.current_card).to eq(@card_1)
+      new_turn = @round.take_turn("Juneau")
+      expect(@round.current_card).to eq(@card_2)
+    end
+    
+    it "accumulate multiple turns and will know if the last cards feedback" do 
+      expect(@round.current_card).to eq(@card_1)
+      new_turn = @round.take_turn("Juneau")
+      expect(@round.current_card).to eq(@card_2)
+      turn_2 = @round.take_turn("Venus")
+      
+      expect(@round.turns.count).to eq(2)
+      expect(@round.number_correct).to eq(1)
+      expect(@round.turns.last.feedback).to eq("Incorrect.")
+    end
+    
+    it "can count the number of cards that were guessed correctly by category" do
+      expect(@round.current_card).to eq(@card_1)
+      new_turn = @round.take_turn("Juneau")
+      expect(@round.current_card).to eq(@card_2)
+      turn_2 = @round.take_turn("Venus")
+      
+      expect(@round.number_of_correct_by_category(:Geography)).to eq(1)
+      # require 'pry';binding.pry
+    end
+
+    it "can calculate the percentage of correct answers" do 
+      expect(@round.current_card).to eq(@card_1)
+      new_turn = @round.take_turn("Juneau")
+      expect(@round.current_card).to eq(@card_2)
+      turn_2 = @round.take_turn("Venus")
+      expect(@round.percent_correct).to eq(50.0)
+    end
+
+    it "can calculate percetage correct by category" do 
+      expect(@round.current_card).to eq(@card_1)
+      new_turn = @round.take_turn("Juneau")
+      expect(@round.current_card).to eq(@card_2)
+      turn_2 = @round.take_turn("Venus")
+      expect(@round.percent_correct).to eq(50.0)
+      
+      expect(@round.percent_correct_by_category(:Geography)).to eq(100.0)
+    end
   end
 end
