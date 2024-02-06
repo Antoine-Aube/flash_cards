@@ -74,7 +74,7 @@ RSpec.describe Deck do
       new_turn = @round.take_turn("Juneau")
       expect(@round.current_card).to eq(@card_2)
       turn_2 = @round.take_turn("Venus")
-      expect(@round.percent_correct).to eq(50.0)
+      expect(@round.percent_correct).to eq("50%")
     end
 
     it "can calculate percetage correct by category" do 
@@ -82,9 +82,9 @@ RSpec.describe Deck do
       new_turn = @round.take_turn("Juneau")
       expect(@round.current_card).to eq(@card_2)
       turn_2 = @round.take_turn("Venus")
-      expect(@round.percent_correct).to eq(50.0)
+      expect(@round.percent_correct).to eq("50%")
       
-      expect(@round.percent_correct_by_category(:Geography)).to eq(100.0)
+      expect(@round.percent_correct_by_category(:Geography)).to eq("100%")
     end
   end
 end
